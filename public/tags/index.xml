@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tags on Exploding-Soda</title>
+        <link>http://localhost:1313/tags/</link>
+        <description>Recent content in Tags on Exploding-Soda</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Exploding-Soda</copyright>
+        <lastBuildDate>Wed, 28 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Computed</title>
+        <link>http://localhost:1313/tags/computed/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/computed/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Inject</title>
+        <link>http://localhost:1313/tags/inject/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/inject/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>JavaScript</title>
+        <link>http://localhost:1313/tags/javascript/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/javascript/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>LangChain</title>
+        <link>http://localhost:1313/tags/langchain/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/langchain/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Provide</title>
+        <link>http://localhost:1313/tags/provide/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/provide/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>React</title>
+        <link>http://localhost:1313/tags/react/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/react/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Reactive</title>
+        <link>http://localhost:1313/tags/reactive/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/reactive/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ref</title>
+        <link>http://localhost:1313/tags/ref/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/ref/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ShallowReactive</title>
+        <link>http://localhost:1313/tags/shallowreactive/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/shallowreactive/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ShallowRef</title>
+        <link>http://localhost:1313/tags/shallowref/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/shallowref/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>TypeScript</title>
+        <link>http://localhost:1313/tags/typescript/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/typescript/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>V-Model</title>
+        <link>http://localhost:1313/tags/v-model/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/v-model/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Vue 3</title>
+        <link>http://localhost:1313/tags/vue-3/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/vue-3/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>全局状态</title>
+        <link>http://localhost:1313/tags/%E5%85%A8%E5%B1%80%E7%8A%B6%E6%80%81/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E5%85%A8%E5%B1%80%E7%8A%B6%E6%80%81/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>复杂场景</title>
+        <link>http://localhost:1313/tags/%E5%A4%8D%E6%9D%82%E5%9C%BA%E6%99%AF/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E5%A4%8D%E6%9D%82%E5%9C%BA%E6%99%AF/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>开发经验</title>
+        <link>http://localhost:1313/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>性能优化</title>
+        <link>http://localhost:1313/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>组件更新</title>
+        <link>http://localhost:1313/tags/%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>组合式API</title>
+        <link>http://localhost:1313/tags/%E7%BB%84%E5%90%88%E5%BC%8Fapi/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E7%BB%84%E5%90%88%E5%BC%8Fapi/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>自定义链</title>
+        <link>http://localhost:1313/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%93%BE/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%93%BE/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>表单处理</title>
+        <link>http://localhost:1313/tags/%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E8%A1%A8%E5%8D%95%E5%A4%84%E7%90%86/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>调试</title>
+        <link>http://localhost:1313/tags/%E8%B0%83%E8%AF%95/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E8%B0%83%E8%AF%95/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>迁移</title>
+        <link>http://localhost:1313/tags/%E8%BF%81%E7%A7%BB/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E8%BF%81%E7%A7%BB/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>链式调用</title>
+        <link>http://localhost:1313/tags/%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>错误处理</title>
+        <link>http://localhost:1313/tags/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

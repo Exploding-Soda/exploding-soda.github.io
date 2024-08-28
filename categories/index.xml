@@ -32,11 +32,27 @@
         <description></description>
         </item>
         <item>
+        <title>数据探索</title>
+        <link>http://localhost:1313/categories/%E6%95%B0%E6%8D%AE%E6%8E%A2%E7%B4%A2/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/%E6%95%B0%E6%8D%AE%E6%8E%A2%E7%B4%A2/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>框架实践</title>
         <link>http://localhost:1313/categories/%E6%A1%86%E6%9E%B6%E5%AE%9E%E8%B7%B5/</link>
         <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/categories/%E6%A1%86%E6%9E%B6%E5%AE%9E%E8%B7%B5/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>游戏心得</title>
+        <link>http://localhost:1313/categories/%E6%B8%B8%E6%88%8F%E5%BF%83%E5%BE%97/</link>
+        <pubDate>Wed, 28 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/%E6%B8%B8%E6%88%8F%E5%BF%83%E5%BE%97/</guid>
         <description></description>
         </item>
         <item>

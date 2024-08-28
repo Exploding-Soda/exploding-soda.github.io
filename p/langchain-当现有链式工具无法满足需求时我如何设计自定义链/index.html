@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="分享我在项目中遇到现有链式工具无法满足复杂需求的情况，如何通过设计自定义链解决问题的经验和心得。">
+<title>[langchain] 当现有链式工具无法满足需求时：我如何设计自定义链</title>
+
+<link rel='canonical' href='http://localhost:1313/p/langchain-%E5%BD%93%E7%8E%B0%E6%9C%89%E9%93%BE%E5%BC%8F%E5%B7%A5%E5%85%B7%E6%97%A0%E6%B3%95%E6%BB%A1%E8%B6%B3%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%87%AA%E5%AE%9A%E4%B9%89%E9%93%BE/'>
+
+<link rel="stylesheet" href="/scss/style.min.0304c6baf04e01a8fe70693791cb744d56a3578a3120a8796cefc66825aa39c7.css"><meta property='og:title' content="[langchain] 当现有链式工具无法满足需求时：我如何设计自定义链">
+<meta property='og:description' content="分享我在项目中遇到现有链式工具无法满足复杂需求的情况，如何通过设计自定义链解决问题的经验和心得。">
+<meta property='og:url' content='http://localhost:1313/p/langchain-%E5%BD%93%E7%8E%B0%E6%9C%89%E9%93%BE%E5%BC%8F%E5%B7%A5%E5%85%B7%E6%97%A0%E6%B3%95%E6%BB%A1%E8%B6%B3%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%87%AA%E5%AE%9A%E4%B9%89%E9%93%BE/'>
+<meta property='og:site_name' content='Exploding-Soda'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='LangChain' /><meta property='article:tag' content='自定义链' /><meta property='article:tag' content='开发经验' /><meta property='article:tag' content='链式调用' /><meta property='article:published_time' content='2024-08-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-28T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="[langchain] 当现有链式工具无法满足需求时：我如何设计自定义链">
+<meta name="twitter:description" content="分享我在项目中遇到现有链式工具无法满足复杂需求的情况，如何通过设计自定义链解决问题的经验和心得。">
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu6211540931438157548.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Exploding-Soda</a></h1>
+            <h2 class="site-description">Everyday 3 meals</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" selected>English</option>
+                                
+                                    <option value="http://localhost:1313/zh-cn/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/ar/" >عربي</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#背景介绍">背景介绍</a></li>
+    <li><a href="#遇到的问题">遇到的问题</a>
+      <ol>
+        <li><a href="#1-如何设计灵活的链条结构">1. <strong>如何设计灵活的链条结构</strong></a></li>
+        <li><a href="#2-异步操作的协调与管理">2. <strong>异步操作的协调与管理</strong></a></li>
+        <li><a href="#3-性能优化">3. <strong>性能优化</strong></a></li>
+        <li><a href="#4-可扩展性和可维护性">4. <strong>可扩展性和可维护性</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#解决方案">解决方案</a>
+      <ol>
+        <li><a href="#1-采用基于节点和边的链条模型">1. <strong>采用基于节点和边的链条模型</strong></a></li>
+        <li><a href="#2-引入异步任务调度器">2. <strong>引入异步任务调度器</strong></a></li>
+        <li><a href="#3-优化数据处理与缓存机制">3. <strong>优化数据处理与缓存机制</strong></a></li>
+        <li><a href="#4-模块化和插件化设计">4. <strong>模块化和插件化设计</strong></a></li>
+      </ol>
+    </li>
+    <li><a href="#实践效果与反思">实践效果与反思</a></li>
+    <li><a href="#结语">结语</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" >
+                后端开发
+            </a>
+        
+            <a href="/categories/%E6%A1%86%E6%9E%B6%E5%AE%9E%E8%B7%B5/" >
+                框架实践
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/langchain-%E5%BD%93%E7%8E%B0%E6%9C%89%E9%93%BE%E5%BC%8F%E5%B7%A5%E5%85%B7%E6%97%A0%E6%B3%95%E6%BB%A1%E8%B6%B3%E9%9C%80%E6%B1%82%E6%97%B6%E6%88%91%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E8%87%AA%E5%AE%9A%E4%B9%89%E9%93%BE/">[langchain] 当现有链式工具无法满足需求时：我如何设计自定义链</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            分享我在项目中遇到现有链式工具无法满足复杂需求的情况，如何通过设计自定义链解决问题的经验和心得。
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 28, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>在近期的一个项目中，我遇到了一个复杂的业务需求，尝试使用现有的链式工具来实现，但发现这些工具并不能完全满足项目的需求。为了克服这个挑战，我决定设计并实现一个自定义的链式调用机制。这篇文章将分享我在这个过程中遇到的问题、解决方案以及从中获得的经验。</p>
+<h2 id="背景介绍">背景介绍
+</h2><p>我参与的项目涉及到处理大量的异步数据流转和多步骤的业务逻辑处理。初始阶段，我们尝试使用现有的链式工具（如 LangChain 提供的内置链）来快速搭建流程。然而，随着需求的不断演进，我们发现：</p>
+<ul>
+<li><strong>复杂的条件分支逻辑</strong>：业务流程中存在大量的条件判断和动态路径选择，现有的链式工具在处理这些复杂分支时显得力不从心。</li>
+<li><strong>高度可定制化的步骤</strong>：某些步骤需要根据实时数据进行动态调整，无法通过预定义的链条结构实现。</li>
+<li><strong>性能和扩展性要求</strong>：数据处理量巨大，现有工具在性能和扩展性上无法满足要求，需要更高效的解决方案。</li>
+</ul>
+<p>鉴于以上原因，我们决定从零开始设计一套自定义的链式调用机制，以满足项目的特殊需求。</p>
+<h2 id="遇到的问题">遇到的问题
+</h2><p>在设计和实现自定义链的过程中，我遇到了以下主要问题：</p>
+<h3 id="1-如何设计灵活的链条结构">1. <strong>如何设计灵活的链条结构</strong>
+</h3><p>我们需要一个能够支持复杂条件分支和动态路径选择的链条结构，但在设计过程中，如何确保链条的灵活性和可维护性成为了首要挑战。</p>
+<h3 id="2-异步操作的协调与管理">2. <strong>异步操作的协调与管理</strong>
+</h3><p>链条中的许多步骤都是异步操作，需要有效的机制来协调这些异步任务，处理错误和超时情况，同时保证整体流程的顺畅。</p>
+<h3 id="3-性能优化">3. <strong>性能优化</strong>
+</h3><p>由于数据量巨大，如何在保证功能完整的前提下，优化链条的执行性能，降低延迟和资源消耗，是必须解决的问题。</p>
+<h3 id="4-可扩展性和可维护性">4. <strong>可扩展性和可维护性</strong>
+</h3><p>设计的链条需要易于扩展，能够适应未来可能的需求变化，同时代码结构清晰，便于团队协作和维护。</p>
+<h2 id="解决方案">解决方案
+</h2><p>针对上述问题，我逐步采取了以下解决方案：</p>
+<h3 id="1-采用基于节点和边的链条模型">1. <strong>采用基于节点和边的链条模型</strong>
+</h3><p>为了实现高度灵活的链条结构，我选择采用<strong>基于节点和边的模型</strong>来设计链条。</p>
+<ul>
+<li><strong>节点（Node）</strong>：代表链条中的每一个独立步骤或操作，每个节点具有输入、处理逻辑和输出。</li>
+<li><strong>边（Edge）</strong>：定义节点之间的连接关系，根据条件动态选择下一个节点，实现复杂的分支逻辑。</li>
+</ul>
+<p><strong>实现细节：</strong></p>
+<ul>
+<li>使用一个<strong>配置文件</strong>来定义节点和边的关系，使得链条结构可以通过修改配置轻松调整。</li>
+<li>为每个节点定义统一的接口，包含执行方法、输入输出类型等，保证节点之间的可组合性。</li>
+<li>引入<strong>条件判断函数</strong>，在边的定义中指定，根据输入数据动态决定下一个执行的节点。</li>
+</ul>
+<p><strong>收获：</strong></p>
+<p>这种设计使得链条结构非常灵活，可以轻松添加、修改或删除节点，满足复杂业务逻辑的需求。同时，配置化的设计提高了链条的可维护性。</p>
+<h3 id="2-引入异步任务调度器">2. <strong>引入异步任务调度器</strong>
+</h3><p>为了有效管理链条中的异步操作，我实现了一个<strong>异步任务调度器</strong>，负责协调异步任务的执行和结果收集。</p>
+<p><strong>实现细节：</strong></p>
+<ul>
+<li>使用 <strong>async/await</strong> 语法，确保异步任务的执行顺序和错误处理更直观。</li>
+<li>为每个节点的执行方法添加<strong>超时机制</strong>，避免单个任务阻塞整个链条。</li>
+<li>实现<strong>并发控制</strong>，根据需要设置并发限制，防止过多的异步任务同时执行导致资源耗尽。</li>
+<li>在调度器中添加<strong>全局错误捕获和重试机制</strong>，对于可恢复的错误，自动进行重试操作，提高链条的稳定性。</li>
+</ul>
+<p><strong>收获：</strong></p>
+<p>通过引入异步任务调度器，链条能够高效、可靠地执行各种异步操作，即使在出现错误或网络波动的情况下，也能保证流程的连续性。</p>
+<h3 id="3-优化数据处理与缓存机制">3. <strong>优化数据处理与缓存机制</strong>
+</h3><p>为了提升链条的执行性能，我对数据处理和缓存机制进行了优化。</p>
+<p><strong>实现细节：</strong></p>
+<ul>
+<li><strong>数据批处理</strong>：对于可以批量处理的数据，合并成一次操作，减少网络请求和计算次数。</li>
+<li><strong>结果缓存</strong>：对于重复使用的数据和中间结果，使用缓存机制存储，避免重复计算和请求。</li>
+<li><strong>异步管道</strong>：构建数据处理的异步管道，利用 <strong>stream</strong> 等技术，边读取边处理，降低内存占用和延迟。</li>
+</ul>
+<p><strong>收获：</strong></p>
+<p>这些优化措施显著提升了链条的执行效率，降低了系统资源消耗，满足了高性能的要求。</p>
+<h3 id="4-模块化和插件化设计">4. <strong>模块化和插件化设计</strong>
+</h3><p>为了保证链条的可扩展性和可维护性，我采用了<strong>模块化和插件化</strong>的设计思路。</p>
+<p><strong>实现细节：</strong></p>
+<ul>
+<li><strong>模块化节点</strong>：将每个节点作为独立的模块开发，遵循统一的接口规范，方便复用和测试。</li>
+<li><strong>插件机制</strong>：支持通过插件方式扩展链条功能，第三方开发者可以根据需求开发自定义节点并无缝集成到链条中。</li>
+<li><strong>单元测试和文档</strong>：为每个节点和核心模块编写详尽的单元测试和文档，确保代码质量和可维护性。</li>
+</ul>
+<p><strong>收获：</strong></p>
+<p>模块化和插件化的设计使得链条能够灵活适应新的需求，同时降低了开发和维护的成本，提升了团队协作效率。</p>
+<h2 id="实践效果与反思">实践效果与反思
+</h2><p>经过一系列的设计和优化，我们成功实现了一个高度灵活、高性能、易扩展的自定义链式调用系统。在实际应用中，系统表现稳定，能够高效处理复杂的业务逻辑，满足了项目的各种需求。</p>
+<p><strong>反思与总结：</strong></p>
+<ul>
+<li><strong>理解需求的重要性</strong>：在开始设计之前，深入理解业务需求是至关重要的，这有助于做出合理的架构设计决策。</li>
+<li><strong>灵活性与复杂度的权衡</strong>：在追求系统灵活性的同时，需要注意控制复杂度，避免过度设计导致维护困难。</li>
+<li><strong>持续优化与迭代</strong>：系统的设计和实现是一个持续优化的过程，根据实际应用中的反馈，不断迭代改进，才能达到最佳效果。</li>
+<li><strong>团队协作与沟通</strong>：在开发过程中，保持良好的团队协作和沟通，能够加速问题的解决和方案的完善。</li>
+</ul>
+<h2 id="结语">结语
+</h2><p>在这次项目中，通过设计和实现自定义链式调用系统，我积累了宝贵的经验和教训。这不仅提升了自身的技术能力，也为团队提供了一个强大的工具，支持更复杂和多样的业务需求。希望我的分享能够对有类似需求和挑战的开发者提供一些有益的参考和启发。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/langchain/">LangChain</a>
+        
+            <a href="/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%93%BE/">自定义链</a>
+        
+            <a href="/tags/%E5%BC%80%E5%8F%91%E7%BB%8F%E9%AA%8C/">开发经验</a>
+        
+            <a href="/tags/%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8/">链式调用</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/langchain-%E5%BC%80%E5%8F%91%E5%A4%8D%E6%9D%82%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%E6%97%B6%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%B0%83%E8%AF%95%E5%9B%B0%E9%9A%BE%E9%97%AE%E9%A2%98%E7%9A%84/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">[langchain] 开发复杂链式调用时，我是如何解决调试困难问题的</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%A4%84%E7%90%86%E5%A4%8D%E6%9D%82%E9%94%99%E8%AF%AF%E5%9C%BA%E6%99%AF%E6%97%B6%E7%9A%84%E7%AD%96%E7%95%A5%E5%92%8C%E6%80%9D%E8%80%83%E6%88%91%E7%9A%84%E5%AE%9E%E8%B7%B5%E7%BB%8F%E9%AA%8C/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">处理复杂错误场景时的策略和思考：我的实践经验</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 Exploding-Soda
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
